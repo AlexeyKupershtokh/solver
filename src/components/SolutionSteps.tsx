@@ -3,9 +3,11 @@ import { StaticMathField } from "react-mathquill";
 interface SolutionStep {
   oldEquation: {
     ascii: () => string;
+    latex: () => string;
   };
   newEquation: {
     ascii: () => string;
+    latex: () => string;
   };
   changeType: string;
   substeps: SolutionStep[];
@@ -34,11 +36,11 @@ export function SolutionSteps({ steps }: SolutionStepsProps) {
             <div className="equation-container">
               <div className="equation-before">
                 <span>Before: </span>
-                <StaticMathField>{step.oldEquation.ascii()}</StaticMathField>
+                <StaticMathField>{step.oldEquation.latex()}</StaticMathField>
               </div>
               <div className="equation-after">
                 <span>After: </span>
-                <StaticMathField>{step.newEquation.ascii()}</StaticMathField>
+                <StaticMathField>{step.newEquation.latex()}</StaticMathField>
               </div>
             </div>
             {step.substeps && step.substeps.length > 0 && (
@@ -54,13 +56,13 @@ export function SolutionSteps({ steps }: SolutionStepsProps) {
                         <div className="substep-before">
                           <span>Before: </span>
                           <StaticMathField>
-                            {substep.oldEquation.ascii()}
+                            {substep.oldEquation.latex()}
                           </StaticMathField>
                         </div>
                         <div className="substep-after">
                           <span>After: </span>
                           <StaticMathField>
-                            {substep.newEquation.ascii()}
+                            {substep.newEquation.latex()}
                           </StaticMathField>
                         </div>
                       </div>

@@ -6,11 +6,13 @@ declare module 'mathsteps' {
     oldEquation: {
       toString: () => string;
       ascii: () => string;
+      latex: () => string;
       // Add other properties as needed
     };
     newEquation: {
       toString: () => string;
       ascii: () => string;
+      latex: () => string;
       // Add other properties as needed
     };
     substeps: MathStep[];
