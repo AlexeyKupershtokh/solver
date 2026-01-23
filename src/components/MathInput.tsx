@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { EditableMathField, StaticMathField, addStyles } from "react-mathquill";
 import * as mathsteps from "mathsteps";
+import { SolutionSteps } from "./SolutionSteps";
 
 // Add required styles for MathQuill
 addStyles();
@@ -10,9 +11,21 @@ interface MathInputProps {
   onChange?: (latex: string) => void;
 }
 
+interface MathStep {
+  oldEquation: {
+    ascii: () => string;
+  };
+  newEquation: {
+    ascii: () => string;
+  };
+  changeType: string;
+  substeps: MathStep[];
+}
+
 export function MathInput({ value = "x-2=0" }: MathInputProps) {
   const [mathValue, setMathValue] = useState(value);
   const [textValue, setTextValue] = useState("");
+  const [solutionSteps, setSolutionSteps] = useState<MathStep[]>([]);
 
   useEffect(() => {
     setMathValue(value);
@@ -30,6 +43,8 @@ export function MathInput({ value = "x-2=0" }: MathInputProps) {
       setTextValue(text);
 
       const steps = mathsteps.solveEquation(text);
+      setSolutionSteps(steps);
+
       steps.forEach((step) => {
         console.log("before change: " + step.oldEquation.ascii()); // e.g. before change: 2x + 3x = 35
         console.log("change: " + step.changeType); // e.g. change: SIMPLIFY_LEFT_SIDE
@@ -45,6 +60,7 @@ export function MathInput({ value = "x-2=0" }: MathInputProps) {
       });
     } catch (error) {
       console.error("Error getting latex from math field:", error);
+      setSolutionSteps([]);
     }
   };
 
@@ -67,6 +83,7 @@ export function MathInput({ value = "x-2=0" }: MathInputProps) {
         <h3>Formula as Text:</h3>
         <p>{textValue || "Your formula will appear here"}</p>
       </div>
+      <SolutionSteps steps={solutionSteps} />
     </>
   );
 }
