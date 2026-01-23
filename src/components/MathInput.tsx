@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { EditableMathField, addStyles } from "react-mathquill";
+import { EditableMathField, StaticMathField, addStyles } from "react-mathquill";
+import * as mathsteps from "mathsteps";
 
 // Add required styles for MathQuill
 addStyles();
@@ -17,7 +18,9 @@ export function MathInput({ value = "x-2=0" }: MathInputProps) {
     setMathValue(value);
   }, [value]);
 
-  const handleChange = (mathField: any) => {
+  const handleChange = (
+    mathField: { text: () => string; latex: () => string } | null
+  ) => {
     if (!mathField) return;
 
     try {
@@ -25,6 +28,21 @@ export function MathInput({ value = "x-2=0" }: MathInputProps) {
       const latex = mathField.latex();
       setMathValue(latex);
       setTextValue(text);
+
+      const steps = mathsteps.solveEquation(text);
+      steps.forEach((step) => {
+        console.log("before change: " + step.oldEquation.ascii()); // e.g. before change: 2x + 3x = 35
+        console.log("change: " + step.changeType); // e.g. change: SIMPLIFY_LEFT_SIDE
+        console.log("after change: " + step.newEquation.ascii()); // e.g. after change: 5x = 35
+        console.log("# of substeps: " + step.substeps.length); // e.g. # of substeps: 2
+        step.substeps.forEach((substep) => {
+          console.log("substep: " + substep.changeType); // e.g. substep: COMBINE_LIKE_TERMS
+          console.log(
+            "substep equation before: " + substep.oldEquation.ascii()
+          ); // e.g. substep equation: 5x = 35
+          console.log("substep equation after: " + substep.newEquation.ascii()); // e.g. substep equation: 5x = 35
+        });
+      });
     } catch (error) {
       console.error("Error getting latex from math field:", error);
     }
