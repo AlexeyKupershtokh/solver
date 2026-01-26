@@ -137,32 +137,6 @@
   }
 }
 
-/* Dark theme specific enhancements */
-@media (prefers-color-scheme: dark) {
-  /* Better contrast for text */
-  .step-info, .substep-info {
-    color: var(--color-text);
-  }
-
-  /* Better visibility for math expressions */
-  .math-display p {
-    background-color: var(--color-bg-tertiary);
-    border: 1px solid var(--color-border);
-  }
-
-  /* Improved equation container visibility */
-  .equation-container, .substep-equations {
-    background-color: var(--color-bg-tertiary);
-    padding: 0.5rem;
-    border-radius: 4px;
-    border: 1px solid var(--color-border);
-  }
-
-  /* Better step borders for dark theme */
-  .solution-step, .substep {
-    border-bottom-color: var(--color-border);
-  }
-}
 
 .solution-step:last-child {
   border-bottom: none;
