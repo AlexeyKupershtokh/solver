@@ -1,20 +1,8 @@
 import { StaticMathField } from "react-mathquill";
-
-interface SolutionStep {
-  oldEquation: {
-    ascii: () => string;
-    latex: () => string;
-  };
-  newEquation: {
-    ascii: () => string;
-    latex: () => string;
-  };
-  changeType: string;
-  substeps: SolutionStep[];
-}
+import type { MathStep } from "mathsteps";
 
 interface SolutionStepsProps {
-  steps: SolutionStep[];
+  steps: MathStep[];
 }
 
 export function SolutionSteps({ steps }: SolutionStepsProps) {

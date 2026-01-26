@@ -2,7 +2,7 @@
 // This file provides TypeScript type definitions for the mathsteps library
 
 declare module 'mathsteps' {
-  interface MathStep {
+  export interface MathStep {
     oldEquation: {
       toString: () => string;
       ascii: () => string;
@@ -32,4 +32,5 @@ declare module 'mathsteps' {
 
   const mathsteps: MathSteps;
   export = mathsteps;
+  export { MathStep };
 }

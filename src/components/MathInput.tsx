@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { EditableMathField, addStyles } from "react-mathquill";
 import * as mathsteps from "mathsteps";
 import { SolutionSteps } from "./SolutionSteps";
+import type { MathStep } from "mathsteps";
 
 // Add required styles for MathQuill
 addStyles();
@@ -9,17 +10,6 @@ addStyles();
 interface MathInputProps {
   value?: string;
   onChange?: (latex: string) => void;
-}
-
-interface MathStep {
-  oldEquation: {
-    ascii: () => string;
-  };
-  newEquation: {
-    ascii: () => string;
-  };
-  changeType: string;
-  substeps: MathStep[];
 }
 
 export function MathInput({ value = "x-2=0" }: MathInputProps) {
