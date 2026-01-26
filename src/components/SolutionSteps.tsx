@@ -2,6 +2,18 @@ import { StaticMathField } from "react-mathquill";
 import type { MathStep } from "mathsteps";
 import { translateChangeType } from "../utils/mathstepsTranslations";
 
+function EquationDisplay({ equation }: { equation: any }) {
+  if (!equation) {
+    return <span className="no-data">Нет данных</span>;
+  }
+  try {
+    const latex = equation.latex();
+    return <StaticMathField>{latex}</StaticMathField>;
+  } catch (e) {
+    return <span className="no-data">Нет данных</span>;
+  }
+}
+
 interface SolutionStepsProps {
   steps: MathStep[];
 }
@@ -25,11 +37,11 @@ export function SolutionSteps({ steps }: SolutionStepsProps) {
             <div className="equation-container">
               <div className="equation-before">
                 <span>До: </span>
-                <StaticMathField>{step.oldEquation.latex()}</StaticMathField>
+                <EquationDisplay equation={step.oldEquation} />
               </div>
               <div className="equation-after">
                 <span>После: </span>
-                <StaticMathField>{step.newEquation.latex()}</StaticMathField>
+                <EquationDisplay equation={step.newEquation} />
               </div>
             </div>
             {step.substeps && step.substeps.length > 0 && (
@@ -46,15 +58,11 @@ export function SolutionSteps({ steps }: SolutionStepsProps) {
                       <div className="substep-equations">
                         <div className="substep-before">
                           <span>До: </span>
-                          <StaticMathField>
-                            {substep.oldEquation.latex()}
-                          </StaticMathField>
+                          <EquationDisplay equation={substep.oldEquation} />
                         </div>
                         <div className="substep-after">
                           <span>После: </span>
-                          <StaticMathField>
-                            {substep.newEquation.latex()}
-                          </StaticMathField>
+                          <EquationDisplay equation={substep.newEquation} />
                         </div>
                       </div>
                     </li>
