@@ -19,33 +19,33 @@ interface SolutionStepsProps {
 
 export function SolutionSteps({ steps }: SolutionStepsProps) {
   if (!steps || steps.length === 0) {
-    return <div className="solution-steps">No solution steps available</div>;
+    return <div className="solution-steps">Не получилось решить уравнение</div>;
   }
 
   return (
     <div className="solution-steps">
-      <h3>Solution Steps:</h3>
+      <h3>Шаги решения:</h3>
       <ol>
         {steps.map((step, stepIndex) => (
           <li key={stepIndex} className="solution-step">
             <div className="step-info">
               <strong>
-                Step {stepIndex + 1}: {step.changeType}
+                Шаг {stepIndex + 1}: {step.changeType}
               </strong>
             </div>
             <div className="equation-container">
               <div className="equation-before">
-                <span>Before: </span>
+                <span>До: </span>
                 <StaticMathField>{step.oldEquation.latex()}</StaticMathField>
               </div>
               <div className="equation-after">
-                <span>After: </span>
+                <span>После: </span>
                 <StaticMathField>{step.newEquation.latex()}</StaticMathField>
               </div>
             </div>
             {step.substeps && step.substeps.length > 0 && (
               <div className="substeps">
-                <h4>Intermediate Steps:</h4>
+                <h4>Промежуточные шаги:</h4>
                 <ol>
                   {step.substeps.map((substep, substepIndex) => (
                     <li key={substepIndex} className="substep">
@@ -54,13 +54,13 @@ export function SolutionSteps({ steps }: SolutionStepsProps) {
                       </div>
                       <div className="substep-equations">
                         <div className="substep-before">
-                          <span>Before: </span>
+                          <span>До: </span>
                           <StaticMathField>
                             {substep.oldEquation.latex()}
                           </StaticMathField>
                         </div>
                         <div className="substep-after">
-                          <span>After: </span>
+                          <span>После: </span>
                           <StaticMathField>
                             {substep.newEquation.latex()}
                           </StaticMathField>

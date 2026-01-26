@@ -31,7 +31,7 @@ export function MathInput({ value = "x-2=0" }: MathInputProps) {
   }, [value]);
 
   const handleChange = (
-    mathField: { text: () => string; latex: () => string } | null
+    mathField: { text: () => string; latex: () => string } | null,
   ) => {
     if (!mathField) return;
 
@@ -51,7 +51,7 @@ export function MathInput({ value = "x-2=0" }: MathInputProps) {
   return (
     <>
       <div className="math-input-container">
-        <h3>Math Formula Input</h3>
+        <h3>Введите уравнение</h3>
         <EditableMathField
           latex={mathValue}
           onChange={handleChange}
