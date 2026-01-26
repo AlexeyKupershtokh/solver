@@ -12,7 +12,7 @@ interface MathInputProps {
   onChange?: (latex: string) => void;
 }
 
-export function MathInput({ value = "x-2=0" }: MathInputProps) {
+export function MathInput({ value = "x-2=0", onChange }: MathInputProps) {
   const [mathValue, setMathValue] = useState(value);
   const [solutionSteps, setSolutionSteps] = useState<MathStep[]>([]);
 
@@ -32,6 +32,11 @@ export function MathInput({ value = "x-2=0" }: MathInputProps) {
 
       const steps = mathsteps.solveEquation(text);
       setSolutionSteps(steps);
+
+      // Call the onChange callback if provided
+      if (onChange) {
+        onChange(latex);
+      }
     } catch (error) {
       console.error("Error getting latex from math field:", error);
       setSolutionSteps([]);
