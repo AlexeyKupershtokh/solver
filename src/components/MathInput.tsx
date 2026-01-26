@@ -43,9 +43,9 @@ export function MathInput({ value = "x-2=0", onChange }: MathInputProps) {
       setSolutionSteps(steps);
 
       // Call the onChange callback if provided
-      if (onChange) {
-        onChange(latex);
-      }
+      // if (onChange) {
+      // onChange(text);
+      // }
     } catch (error) {
       console.error("Error getting latex from math field:", error);
       setSolutionSteps([]);
