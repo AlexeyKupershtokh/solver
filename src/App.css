@@ -53,8 +53,8 @@
   /* margin: 1rem 0; */
   padding-bottom: 1rem;
   background-color: var(--color-surface);
-  border-radius: 4px;
-  border: 1px solid var(--color-border-light);
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
 }
 
 .math-input-field {
@@ -67,8 +67,8 @@
   margin-top: 1rem;
   padding: 1rem;
   background-color: var(--color-surface);
-  border-radius: 4px;
-  border: 1px solid var(--color-border-light);
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
 }
 
 .math-display h3 {
