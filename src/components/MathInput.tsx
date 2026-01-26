@@ -12,7 +12,7 @@ interface MathInputProps {
   onChange?: (latex: string) => void;
 }
 
-export function MathInput({ value = "x-2=0", onChange }: MathInputProps) {
+export function MathInput({ value = "x-2=0" }: MathInputProps) {
   const [mathValue, setMathValue] = useState(value);
   const [solutionSteps, setSolutionSteps] = useState<MathStep[]>([]);
 
