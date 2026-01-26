@@ -18,6 +18,15 @@ export function MathInput({ value = "x-2=0", onChange }: MathInputProps) {
 
   useEffect(() => {
     setMathValue(value);
+
+    // Compute solution steps when value changes
+    try {
+      const steps = mathsteps.solveEquation(value);
+      setSolutionSteps(steps);
+    } catch (error) {
+      console.error("Error computing solution steps:", error);
+      setSolutionSteps([]);
+    }
   }, [value]);
 
   const handleChange = (
