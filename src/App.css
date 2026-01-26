@@ -44,17 +44,17 @@
 .math-section {
   margin-top: 2rem;
   padding: 1.5rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: var(--color-bg-secondary);
 }
 
 .math-input-container {
   /* margin: 1rem 0; */
   padding-bottom: 1rem;
-  background-color: white;
+  background-color: var(--color-surface);
   border-radius: 4px;
-  border: 1px solid #eee;
+  border: 1px solid var(--color-border-light);
 }
 
 .math-input-field {
@@ -66,9 +66,9 @@
 .math-display {
   margin-top: 1rem;
   padding: 1rem;
-  background-color: white;
+  background-color: var(--color-surface);
   border-radius: 4px;
-  border: 1px solid #eee;
+  border: 1px solid var(--color-border-light);
 }
 
 .math-display h3 {
@@ -78,7 +78,7 @@
 
 .math-display p {
   font-family: monospace;
-  background-color: #f0f0f0;
+  background-color: var(--color-bg-tertiary);
   padding: 0.5rem;
   border-radius: 4px;
   word-break: break-all;
@@ -87,9 +87,9 @@
 .solution-steps {
   margin-top: 2rem;
   padding: 1.5rem;
-  background-color: white;
+  background-color: var(--color-surface);
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   text-align: left;
 }
 
@@ -101,7 +101,67 @@
 .solution-step {
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 1px dashed #eee;
+  border-bottom: 1px dashed var(--color-border-light);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  #root {
+    padding: 1rem;
+  }
+
+  .math-section, .solution-steps {
+    padding: 1rem;
+  }
+
+  .math-input-field {
+    min-height: 2.5rem;
+    font-size: 1rem;
+  }
+
+  .equation-container, .substep-equations {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  /* Better spacing for mobile */
+  .solution-step {
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .substep {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.3rem;
+  }
+}
+
+/* Dark theme specific enhancements */
+@media (prefers-color-scheme: dark) {
+  /* Better contrast for text */
+  .step-info, .substep-info {
+    color: var(--color-text);
+  }
+
+  /* Better visibility for math expressions */
+  .math-display p {
+    background-color: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+  }
+
+  /* Improved equation container visibility */
+  .equation-container, .substep-equations {
+    background-color: var(--color-bg-tertiary);
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--color-border);
+  }
+
+  /* Better step borders for dark theme */
+  .solution-step, .substep {
+    border-bottom-color: var(--color-border);
+  }
 }
 
 .solution-step:last-child {
@@ -131,7 +191,7 @@
 .substeps {
   margin-top: 1rem;
   padding-left: 1.5rem;
-  border-left: 2px solid #646cff;
+  border-left: 2px solid var(--color-accent);
 }
 
 .substeps h4 {
@@ -142,7 +202,7 @@
 .substep {
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px dashed #f0f0f0;
+  border-bottom: 1px dashed var(--color-border-light);
 }
 
 .substep:last-child {

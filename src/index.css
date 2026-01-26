@@ -3,9 +3,22 @@
   line-height: 1.5;
   font-weight: 400;
 
+  /* CSS Variables for theming */
+  --color-text: rgba(255, 255, 255, 0.87);
+  --color-text-secondary: rgba(255, 255, 255, 0.6);
+  --color-bg: #242424;
+  --color-bg-secondary: #1a1a1a;
+  --color-bg-tertiary: #121212;
+  --color-border: #444;
+  --color-border-light: #333;
+  --color-accent: #646cff;
+  --color-accent-hover: #535bf2;
+  --color-surface: #1e1e1e;
+  --color-surface-light: #2d2d2d;
+
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--color-text);
+  background-color: var(--color-bg);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -42,7 +55,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--color-surface);
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -56,13 +69,74 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    --color-text: #213547;
+    --color-text-secondary: #555;
+    --color-bg: #ffffff;
+    --color-bg-secondary: #f5f5f5;
+    --color-bg-tertiary: #f0f0f0;
+    --color-border: #ddd;
+    --color-border-light: #eee;
+    --color-accent: #646cff;
+    --color-accent-hover: #535bf2;
+    --color-surface: #f9f9f9;
+    --color-surface-light: #ffffff;
   }
   a:hover {
     color: #747bff;
   }
-  button {
-    background-color: #f9f9f9;
+}
+
+/* Mobile responsive design */
+@media (max-width: 768px) {
+  :root {
+    font-size: 14px;
+  }
+
+  #root {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  /* Dark theme specific mobile adjustments */
+  .math-section, .solution-steps {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Dark theme specific mobile adjustments */
+@media (max-width: 768px) and (prefers-color-scheme: dark) {
+  :root {
+    --color-text: rgba(255, 255, 255, 0.95);
+    --color-text-secondary: rgba(255, 255, 255, 0.7);
+  }
+}
+
+/* Dark theme specific enhancements */
+@media (prefers-color-scheme: dark) {
+  /* Better input field visibility in dark theme */
+  .math-input-field {
+    background-color: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+  }
+
+  /* Better display contrast */
+  .math-display {
+    background-color: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+  }
+
+  /* Improved step visibility */
+  .solution-step {
+    border-bottom-color: var(--color-border-light);
+  }
+
+  /* Better equation container visibility */
+  .equation-container, .substep-equations {
+    background-color: var(--color-bg-tertiary);
+    padding: 0.5rem;
+    border-radius: 4px;
   }
 }
