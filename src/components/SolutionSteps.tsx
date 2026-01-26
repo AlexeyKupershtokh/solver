@@ -1,5 +1,6 @@
 import { StaticMathField } from "react-mathquill";
 import type { MathStep } from "mathsteps";
+import { translateChangeType } from "../utils/mathstepsTranslations";
 
 interface SolutionStepsProps {
   steps: MathStep[];
@@ -18,7 +19,7 @@ export function SolutionSteps({ steps }: SolutionStepsProps) {
           <li key={stepIndex} className="solution-step">
             <div className="step-info">
               <strong>
-                Шаг {stepIndex + 1}: {step.changeType}
+                Шаг {stepIndex + 1}: {translateChangeType(step.changeType)}
               </strong>
             </div>
             <div className="equation-container">
@@ -38,7 +39,9 @@ export function SolutionSteps({ steps }: SolutionStepsProps) {
                   {step.substeps.map((substep, substepIndex) => (
                     <li key={substepIndex} className="substep">
                       <div className="substep-info">
-                        <strong>{substep.changeType}</strong>
+                        <strong>
+                          {translateChangeType(substep.changeType)}
+                        </strong>
                       </div>
                       <div className="substep-equations">
                         <div className="substep-before">
