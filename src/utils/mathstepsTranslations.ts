@@ -54,7 +54,7 @@ export const mathstepsTranslations: Record<string, string> = {
   // Equations
   'ADD_TO_BOTH_SIDES': 'Добавить к обеим сторонам',
   'DIVIDE_FROM_BOTH_SIDES': 'Разделить обе стороны',
-  'multiply_both_sides_by_inverse_fraction': 'Умножить обе стороны на обратную дробь',
+  'MULTIPLY_BOTH_SIDES_BY_INVERSE_FRACTION': 'Умножить обе стороны на обратную дробь',
   'MULTIPLY_BOTH_SIDES_BY_NEGATIVE_ONE': 'Умножить обе стороны на минус единицу',
   'MULTIPLY_TO_BOTH_SIDES': 'Умножить обе стороны',
   'SIMPLIFY_LEFT_SIDE': 'Упростить левую сторону',
