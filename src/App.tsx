@@ -16,6 +16,7 @@ function App() {
     if (eqParam && eqParam !== equation) {
       setEquation(eqParam);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleEquationChange = (newEquation: string) => {

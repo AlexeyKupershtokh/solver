@@ -3,16 +3,19 @@ import { StaticMathField } from "react-mathquill";
 import type { MathStep } from "mathsteps";
 import { translateChangeType } from "../utils/mathstepsTranslations";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function EquationDisplay({ equation }: { equation: any }) {
   if (!equation) {
     return <span className="no-data">Нет данных</span>;
   }
+  let latex = "";
   try {
-    const latex = equation.latex();
-    return <StaticMathField>{latex}</StaticMathField>;
+    latex = equation.latex();
   } catch (e) {
+    console.error("Error getting latex:", e);
     return <span className="no-data">Нет данных</span>;
   }
+  return <StaticMathField>{latex}</StaticMathField>;
 }
 
 interface SolutionStepsProps {

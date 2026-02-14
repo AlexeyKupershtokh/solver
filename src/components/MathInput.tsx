@@ -17,16 +17,19 @@ export function MathInput({ value = "x-2=0" }: MathInputProps) {
   const [solutionSteps, setSolutionSteps] = useState<MathStep[]>([]);
 
   useEffect(() => {
-    setMathValue(value);
+    if (value !== mathValue) {
+      setMathValue(value);
 
-    // Compute solution steps when value changes
-    try {
-      const steps = mathsteps.solveEquation(value);
-      setSolutionSteps(steps);
-    } catch (error) {
-      console.error("Error computing solution steps:", error);
-      setSolutionSteps([]);
+      // Compute solution steps when value changes
+      try {
+        const steps = mathsteps.solveEquation(value);
+        setSolutionSteps(steps);
+      } catch (error) {
+        console.error("Error computing solution steps:", error);
+        setSolutionSteps([]);
+      }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   const handleChange = (
