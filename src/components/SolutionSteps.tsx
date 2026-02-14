@@ -1,11 +1,32 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { StaticMathField } from "react-mathquill";
 import type { MathStep } from "mathsteps";
 import { translateChangeType } from "../utils/mathstepsTranslations";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function EquationDisplay({ equation }: { equation: any }) {
-  const [copied, setCopied] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const [copiedType, setCopiedType] = useState<"ascii" | "latex" | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setShowMenu(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   if (!equation) {
     return <span className="no-data">Нет данных</span>;
@@ -20,24 +41,51 @@ function EquationDisplay({ equation }: { equation: any }) {
     return <span className="no-data">Нет данных</span>;
   }
 
-  const handleCopy = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    navigator.clipboard.writeText(ascii).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+  const handleCopy = (text: string, type: "ascii" | "latex") => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedType(type);
+      setTimeout(() => {
+        setCopiedType(null);
+        setShowMenu(false);
+      }, 1000);
     });
   };
 
   return (
     <span className="equation-wrapper" title={ascii}>
       <StaticMathField>{latex}</StaticMathField>
-      <button
-        className={`copy-btn ${copied ? "copied" : ""}`}
-        onClick={handleCopy}
-        title="Копировать выражение"
-      >
-        {copied ? "✓" : "📋"}
-      </button>
+      <div className="copy-container" style={{ position: "relative" }}>
+        <button
+          ref={buttonRef}
+          className={`copy-btn ${showMenu ? "active" : ""}`}
+          onClick={() => setShowMenu(!showMenu)}
+          title="Копировать выражение"
+        >
+          📋
+        </button>
+        {showMenu && (
+          <div className="copy-menu" ref={menuRef}>
+            <button
+              className={`copy-menu-item ${copiedType === "ascii" ? "copied" : ""}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleCopy(ascii, "ascii");
+              }}
+            >
+              {copiedType === "ascii" ? "✓ " : ""}ASCII
+            </button>
+            <button
+              className={`copy-menu-item ${copiedType === "latex" ? "copied" : ""}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleCopy(latex, "latex");
+              }}
+            >
+              {copiedType === "latex" ? "✓ " : ""}LaTeX
+            </button>
+          </div>
+        )}
+      </div>
     </span>
   );
 }
