@@ -36,6 +36,10 @@ function EquationDisplay({ equation }: { equation: any }) {
   try {
     latex = equation.latex();
     ascii = equation.ascii();
+
+    // Fix for mathsteps sometimes returning "~" which should be multiplication
+    latex = latex.replace(/~/g, "\\cdot");
+    ascii = ascii.replace(/~/g, "*");
   } catch (e) {
     console.error("Error getting latex/ascii:", e);
     return <span className="no-data">Нет данных</span>;
