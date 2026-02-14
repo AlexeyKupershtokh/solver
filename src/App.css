@@ -34,9 +34,10 @@ h2 {
 }
 
 .math-input-field {
-  min-height: 4rem;
+  min-height: auto;
   font-size: 1.5rem;
-  padding: 1rem;
+  line-height: 1;
+  padding: 0.5rem;
   border: 2px solid var(--color-border);
   border-radius: var(--radius-md);
   background-color: var(--color-bg);
@@ -44,6 +45,11 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.math-input-field .mq-editable-field {
+  margin: 0;
+  padding: 0;
 }
 
 .math-input-field:focus-within {
@@ -309,7 +315,8 @@ h2 {
 
   .math-input-field {
     font-size: 1.25rem;
-    min-height: 3.5rem;
+    min-height: auto;
+    padding: 0.5rem;
   }
 
   .equation-container,
@@ -322,7 +329,6 @@ h2 {
   .equation-before,
   .equation-after {
     width: 100%;
-    background: white;
     padding: 0.5rem;
     border-radius: var(--radius-sm);
   }
