@@ -31,13 +31,6 @@ function StepItem({ step, stepIndex }: { step: MathStep; stepIndex: number }) {
         </strong>
       </div>
 
-      <div className="equation-container">
-        <div className="equation-before">
-          <span>До: </span>
-          <EquationDisplay equation={step.oldEquation} />
-        </div>
-      </div>
-
       {hasSubsteps && (
         <div className="substeps-wrapper">
           <button
@@ -58,12 +51,8 @@ function StepItem({ step, stepIndex }: { step: MathStep; stepIndex: number }) {
                       <strong>{translateChangeType(substep.changeType)}</strong>
                     </div>
                     <div className="substep-equations">
-                      <div className="substep-before">
-                        <span>До: </span>
-                        <EquationDisplay equation={substep.oldEquation} />
-                      </div>
                       <div className="substep-after">
-                        <span>После: </span>
+                        <span>Результат: </span>
                         <EquationDisplay equation={substep.newEquation} />
                       </div>
                     </div>
@@ -77,7 +66,7 @@ function StepItem({ step, stepIndex }: { step: MathStep; stepIndex: number }) {
 
       <div className="equation-container">
         <div className="equation-after">
-          <span>После: </span>
+          <span>Результат: </span>
           <EquationDisplay equation={step.newEquation} />
         </div>
       </div>
