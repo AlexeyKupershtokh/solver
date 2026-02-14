@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { EditableMathField, addStyles } from "react-mathquill";
+import { EditableMathField, addStyles, type MathField } from "react-mathquill";
 import * as mathsteps from "mathsteps";
 import { SolutionSteps } from "./SolutionSteps";
 import type { MathStep } from "mathsteps";
@@ -15,7 +15,7 @@ interface MathInputProps {
 export function MathInput({ value = "x-2=0", onChange }: MathInputProps) {
   const [mathValue, setMathValue] = useState(value);
   const [solutionSteps, setSolutionSteps] = useState<MathStep[]>([]);
-  const mathFieldRef = useRef<any>(null);
+  const mathFieldRef = useRef<MathField | null>(null);
 
   useEffect(() => {
     if (value !== mathValue) {
