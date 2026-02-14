@@ -5,17 +5,41 @@ import { translateChangeType } from "../utils/mathstepsTranslations";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function EquationDisplay({ equation }: { equation: any }) {
+  const [copied, setCopied] = useState(false);
+
   if (!equation) {
     return <span className="no-data">Нет данных</span>;
   }
   let latex = "";
+  let ascii = "";
   try {
     latex = equation.latex();
+    ascii = equation.ascii();
   } catch (e) {
-    console.error("Error getting latex:", e);
+    console.error("Error getting latex/ascii:", e);
     return <span className="no-data">Нет данных</span>;
   }
-  return <StaticMathField>{latex}</StaticMathField>;
+
+  const handleCopy = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(ascii).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
+  return (
+    <span className="equation-wrapper" title={ascii}>
+      <StaticMathField>{latex}</StaticMathField>
+      <button
+        className={`copy-btn ${copied ? "copied" : ""}`}
+        onClick={handleCopy}
+        title="Копировать выражение"
+      >
+        {copied ? "✓" : "📋"}
+      </button>
+    </span>
+  );
 }
 
 interface SolutionStepsProps {

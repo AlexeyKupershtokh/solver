@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { EditableMathField, addStyles } from "react-mathquill";
 import * as mathsteps from "mathsteps";
 import { SolutionSteps } from "./SolutionSteps";
@@ -9,24 +9,31 @@ addStyles();
 
 interface MathInputProps {
   value?: string;
-  onChange?: (latex: string) => void;
+  onChange?: (value: string) => void;
 }
 
-export function MathInput({ value = "x-2=0" }: MathInputProps) {
+export function MathInput({ value = "x-2=0", onChange }: MathInputProps) {
   const [mathValue, setMathValue] = useState(value);
   const [solutionSteps, setSolutionSteps] = useState<MathStep[]>([]);
+  const mathFieldRef = useRef<any>(null);
 
   useEffect(() => {
     if (value !== mathValue) {
       setMathValue(value);
 
-      // Compute solution steps when value changes
-      try {
-        const steps = mathsteps.solveEquation(value);
-        setSolutionSteps(steps);
-      } catch (error) {
-        console.error("Error computing solution steps:", error);
-        setSolutionSteps([]);
+      // When value changes from props (e.g. URL change), update the field and steps
+      if (mathFieldRef.current) {
+        try {
+          // Force update the math field to ensure we get the correct text representation
+          mathFieldRef.current.latex(value);
+          const text = mathFieldRef.current.text();
+
+          const steps = mathsteps.solveEquation(text);
+          setSolutionSteps(steps);
+        } catch (error) {
+          console.error("Error computing solution steps:", error);
+          setSolutionSteps([]);
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,9 +53,9 @@ export function MathInput({ value = "x-2=0" }: MathInputProps) {
       setSolutionSteps(steps);
 
       // Call the onChange callback if provided
-      // if (onChange) {
-      // onChange(text);
-      // }
+      if (onChange) {
+        onChange(latex); // Pass LaTeX to parent for URL storage
+      }
     } catch (error) {
       console.error("Error getting latex from math field:", error);
       setSolutionSteps([]);
@@ -62,6 +69,17 @@ export function MathInput({ value = "x-2=0" }: MathInputProps) {
         <EditableMathField
           latex={mathValue}
           onChange={handleChange}
+          mathquillDidMount={(mathField) => {
+            mathFieldRef.current = mathField;
+            // Initial solve on mount using the provided value (latex or text)
+            try {
+              const text = mathField.text();
+              const steps = mathsteps.solveEquation(text);
+              setSolutionSteps(steps);
+            } catch (error) {
+              console.error("Error computing solution steps on mount:", error);
+            }
+          }}
           config={{
             handlers: {
               edit: handleChange,

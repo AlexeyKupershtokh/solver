@@ -118,6 +118,50 @@ h2 {
   font-size: 0.9rem;
 }
 
+.equation-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s;
+}
+
+.equation-wrapper:hover {
+  background-color: var(--color-bg-secondary, #f0f0f0);
+}
+
+.copy-btn {
+  opacity: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 1rem;
+  line-height: 1;
+  border-radius: 4px;
+  transition: opacity 0.2s, background-color 0.2s;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.equation-wrapper:hover .copy-btn,
+.copy-btn.copied {
+  opacity: 1;
+}
+
+.copy-btn:hover {
+  background-color: var(--color-border);
+  color: var(--color-primary);
+}
+
+.copy-btn.copied {
+  color: var(--color-success, #10b981);
+}
+
 /* MathQuill overrides for better visibility */
 .mq-editable-field, .mq-math-mode {
   border: none !important;
