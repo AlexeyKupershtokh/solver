@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { StaticMathField } from "react-mathquill";
 import type { MathStep } from "mathsteps";
 import { translateChangeType } from "../utils/mathstepsTranslations";
+import html2canvas from "html2canvas";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function EquationDisplay({ equation }: { equation: any }) {
@@ -9,6 +10,7 @@ function EquationDisplay({ equation }: { equation: any }) {
   const [copiedType, setCopiedType] = useState<"ascii" | "latex" | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const equationRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -55,8 +57,27 @@ function EquationDisplay({ equation }: { equation: any }) {
     });
   };
 
+  const handleExportImage = async () => {
+    if (!equationRef.current) return;
+    try {
+      const canvas = await html2canvas(equationRef.current, {
+        backgroundColor: null,
+        scale: 2,
+        ignoreElements: (el: Element) =>
+          el.classList.contains("copy-btn") ||
+          el.classList.contains("copy-menu"),
+      });
+      const link = document.createElement("a");
+      link.download = "equation.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    } catch (e) {
+      console.error("Error exporting image:", e);
+    }
+  };
+
   return (
-    <span className="equation-wrapper" title={ascii}>
+    <span ref={equationRef} className="equation-wrapper" title={ascii}>
       <StaticMathField>{latex}</StaticMathField>
       <div className="copy-container" style={{ position: "relative" }}>
         <button
@@ -86,6 +107,15 @@ function EquationDisplay({ equation }: { equation: any }) {
               }}
             >
               {copiedType === "latex" ? "✓ " : ""}LaTeX
+            </button>
+            <button
+              className="copy-menu-item"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleExportImage();
+              }}
+            >
+              Скачать как PNG
             </button>
           </div>
         )}
